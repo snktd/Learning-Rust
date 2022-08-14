@@ -7,6 +7,8 @@ impl<'a, T> Iterator for MyMutableIterator<'a, T> {
     type Item = &'a mut T;
 
     fn next<'next>(&'next mut self) -> Option<Self::Item> {
+        // Note the double pointer here (on line 12). Also using the mem::replace to get the original slice 
+        // from MyMutableIterator, so that we can use the lifetime 'a.
         let slice = std::mem::replace(&mut self.slice, &mut []);
         let (first, remaining) = slice.split_first_mut()?;
 

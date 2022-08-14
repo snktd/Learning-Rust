@@ -6,6 +6,8 @@ impl<'a, T> Iterator for MyIterator<'a, T> {
 
     type Item = &'a T;
     fn next(&mut self) -> Option<Self::Item> {
+        // Note that because we are borrowing an immutable reference, there is no
+        // need to specify an explicit lifetime here.
         let (first, remaining) = self.slice.split_first()?;
         self.slice = remaining;
         Some(first)
